@@ -1,6 +1,6 @@
 # BEng Final Project
 
-
+![alt text](image-1.png)
 
 ## Reading list
 
