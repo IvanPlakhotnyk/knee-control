@@ -1,6 +1,6 @@
 function peaks = findPeaks (fsr)
     THRESHOLD = 3.3; % V
-    NUM_SAMPLES_SEPARATION = 120; % 1s at 120Hz
+    NUM_SAMPLES_SEPARATION = 200; % 1s at 200Hz
 
     peaks = zeros(size(fsr));
     cnt = 0;

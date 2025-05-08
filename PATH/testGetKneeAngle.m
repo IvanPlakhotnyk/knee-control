@@ -6,26 +6,26 @@ function testGetKneeAngle()
     % Test case 1: 90-degree knee angle
     fprintf('\nTest case 1: 90-degree knee angle\n');
     mocap1 = createMocapData(90);
-    [kneeAngles_deg, kneeAngles_rad] = getKneeAngle(mocap1);
-    verifyResults(kneeAngles_deg, kneeAngles_rad, 90);
+    [kneeAngles_deg] = getKneeAngle(mocap1);
+    verifyResults(kneeAngles_deg, 90);
     
     % Test case 2: 45-degree knee angle
     fprintf('\nTest case 2: 45-degree knee angle\n');
     mocap2 = createMocapData(45);
-    [kneeAngles_deg, kneeAngles_rad] = getKneeAngle(mocap2);
-    verifyResults(kneeAngles_deg, kneeAngles_rad, 45);
+    [kneeAngles_deg] = getKneeAngle(mocap2);
+    verifyResults(kneeAngles_deg, 45);
     
     % Test case 3: 0-degree knee angle (straight leg)
     fprintf('\nTest case 3: 0-degree knee angle (straight leg)\n');
     mocap3 = createMocapData(0);
-    [kneeAngles_deg, kneeAngles_rad] = getKneeAngle(mocap3);
-    verifyResults(kneeAngles_deg, kneeAngles_rad, 0);
+    [kneeAngles_deg] = getKneeAngle(mocap3);
+    verifyResults(kneeAngles_deg, 0);
     
     % Test case 4: 135-degree knee angle (deeply flexed)
     fprintf('\nTest case 4: 135-degree knee angle (deeply flexed)\n');
     mocap4 = createMocapData(135);
-    [kneeAngles_deg, kneeAngles_rad] = getKneeAngle(mocap4);
-    verifyResults(kneeAngles_deg, kneeAngles_rad, 135);
+    [kneeAngles_deg] = getKneeAngle(mocap4);
+    verifyResults(kneeAngles_deg,135);
     
     % 2. Test with time-series data (simulated walking pattern)
     fprintf('\nTest case 5: Simulated walking pattern\n');
@@ -57,11 +57,10 @@ function mocap = createMocapData(kneeAngle_deg)
 end
 
 % Helper function to verify results
-function verifyResults(kneeAngles_deg, kneeAngles_rad, expectedAngle_deg)
-    expectedAngle_rad = deg2rad(expectedAngle_deg);
+function verifyResults(kneeAngles_deg, expectedAngle_deg)
     
-    fprintf('Expected angle: %.2f degrees (%.4f radians)\n', expectedAngle_deg, expectedAngle_rad);
-    fprintf('Calculated angle: %.2f degrees (%.4f radians)\n', kneeAngles_deg, kneeAngles_rad);
+    fprintf('Expected angle: %.2f degrees (%.4f radians)\n', expectedAngle_deg);
+    fprintf('Calculated angle: %.2f degrees (%.4f radians)\n', kneeAngles_deg);
     
     tolerance = 1e-4;
     if abs(kneeAngles_deg - expectedAngle_deg) < tolerance
@@ -76,13 +75,11 @@ function simulateWalkingTest(angleProfile)
     % Create time-series data
     numFrames = length(angleProfile);
     kneeAngles_deg_result = zeros(numFrames, 1);
-    kneeAngles_rad_result = zeros(numFrames, 1);
     
     for i = 1:numFrames
         mocap = createMocapData(angleProfile(i));
-        [kneeAngles_deg, kneeAngles_rad] = getKneeAngle(mocap);
+        [kneeAngles_deg] = getKneeAngle(mocap);
         kneeAngles_deg_result(i) = kneeAngles_deg;
-        kneeAngles_rad_result(i) = kneeAngles_rad;
     end
     
     % Verify results
